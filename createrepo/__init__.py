@@ -1488,6 +1488,14 @@ class MetaDataGenerator:
                     msg = _('Could not restore old non-metadata file: %s -> %s') % (oldfile, finalfile)
                     msg += _('Error was %s') % e
                     raise MDError, msg
+
+        if os.path.exists(output_old_dir):
+            try:
+                os.rmdir(output_old_dir)
+            except OSError, e:
+                raise MDError, _(
+                    'Could not remove old data directory: %s: %s') % (output_old_dir, e)
+
         self._write_out_read_pkgs_list()
 
 
